@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Alert from "./Alert";
 import List from "./List";
+import Alert from "./Alert";
 
 const getLocalStorage = () => {
   let list = localStorage.getItem("list");
@@ -13,15 +13,15 @@ const getLocalStorage = () => {
 
 function App() {
   const [name, setName] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
   const [list, setList] = useState(getLocalStorage());
-  const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
+  const [isEditing, setIsEditing] = useState(false);
   const [editID, setEditID] = useState(null);
+  const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name) {
-      showAlert(true, "danger", "Please enter value");
+      showAlert(true, "danger", "please enter value");
     } else if (name && isEditing) {
       setList(
         list.map((item) => {
@@ -34,10 +34,10 @@ function App() {
       setName("");
       setEditID(null);
       setIsEditing(false);
-      showAlert(true, "success", "Value Changed");
+      showAlert(true, "success", "value changed");
     } else {
-      showAlert(true, "success", "Item added to the list");
-      const newItem = { id: new Date().getTime().toString, title: name };
+      showAlert(true, "success", "item added to the list");
+      const newItem = { id: new Date().getTime().toString(), title: name };
 
       setList([...list, newItem]);
       setName("");
@@ -68,22 +68,22 @@ function App() {
   useEffect(() => {
     localStorage.setItem("list", JSON.stringify(list));
   }, [list]);
-
   return (
     <section className="section-center">
       <form className="grocery-form" onSubmit={handleSubmit}>
         {alert.show && <Alert {...alert} removeAlert={showAlert} list={list} />}
-        <h3>Grocery list</h3>
+
+        <h3>grocery bud</h3>
         <div className="form-control">
           <input
             type="text"
-            placeholder="e.g. eggs"
             className="grocery"
+            placeholder="e.g. eggs"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <button type="submit" className="submit-btn">
-            {isEditing ? "Edit" : "Submit"}
+            {isEditing ? "edit" : "submit"}
           </button>
         </div>
       </form>
@@ -91,7 +91,7 @@ function App() {
         <div className="grocery-container">
           <List items={list} removeItem={removeItem} editItem={editItem} />
           <button className="clear-btn" onClick={clearList}>
-            Clear Items
+            clear items
           </button>
         </div>
       )}
